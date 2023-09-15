@@ -39,7 +39,8 @@ int main(int argc, char **argv)
 
 	char *efivar_path = argv[1];
 	const size_t tmpsz = 0x400;
-	char tmp[tmpsz] = {};
+	char tmp[tmpsz];
+	memset(tmp, 0, tmpsz);
 	assert(strlen(efivar_path) <= tmpsz);
 	strncpy(tmp, efivar_path, strlen(efivar_path));
 	char *efivar = basename(tmp);
