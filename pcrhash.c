@@ -96,6 +96,9 @@ int main(int argc, char **argv)
 	memcpy(VarLog->UnicodeName, VarName, VarNameLength * sizeof(*VarName));
 	memcpy((char16_t *)VarLog->UnicodeName + VarNameLength, VarData, VarSize);
 
-	write(STDOUT_FILENO, VarLog, VarLogSize);
+	size_t written = write(STDOUT_FILENO, VarLog, VarLogSize);
+	if (written != VarLogSize)
+		return 1;
+
 	return 0;
 }
