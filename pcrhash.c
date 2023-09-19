@@ -38,6 +38,7 @@ int main(int argc, char **argv)
 	}
 
 	char *efivar_path = argv[1];
+	const int exists = access(efivar_path, F_OK) == 0;
 	const size_t tmpsz = 0x400;
 	char tmp[tmpsz];
 	memset(tmp, 0, tmpsz);
@@ -63,11 +64,17 @@ int main(int argc, char **argv)
 
 	const size_t VarDataBufSize = 0x4000;
 	int8_t VarDataBuf[VarDataBufSize];
-	FILE *efivar_filp = fopen(efivar_path, "rb");
-	// remove first four bytes, which are EFI variable attributes
-	const size_t VarSize = fread(VarDataBuf, 1, VarDataBufSize, efivar_filp) - 4;
-	const int8_t *VarData = VarDataBuf+4;
-	fclose(efivar_filp);
+
+	FILE *efivar_filp = NULL;
+	size_t VarSize = 0;
+	int8_t *VarData = NULL;
+	if (exists) {
+		efivar_filp = fopen(efivar_path, "rb");
+		// remove first four bytes, which are EFI variable attributes
+		VarSize = fread(VarDataBuf, 1, VarDataBufSize, efivar_filp) - 4;
+		VarData = VarDataBuf+4;
+		fclose(efivar_filp);
+	}
 
 	const size_t VarNameSize = 0x40;
 	char16_t VarName[VarNameSize];
