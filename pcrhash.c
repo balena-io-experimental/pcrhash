@@ -25,6 +25,26 @@ struct __attribute__((packed)) UEFI_VARIABLE_DATA {
 	int8_t		VariableData[1];
 };
 
+int parse_guid(struct EFI_GUID *g, const char *s)
+{
+	const size_t expected_vars = 11;
+	unsigned int p[expected_vars];
+
+	if (sscanf(s, "%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+			  &p[0],
+			  &p[1], &p[2],
+			  &p[3], &p[4], &p[5], &p[6],
+			  &p[7], &p[8], &p[9], &p[10]) == expected_vars) {
+		g->Data1 = p[0];
+		g->Data2 = p[1]; g->Data3 = p[2];
+		g->Data4[0] = p[3]; g->Data4[1] = p[4]; g->Data4[2] = p[5]; g->Data4[3] = p[6];
+		g->Data4[4] = p[7]; g->Data4[5] = p[8]; g->Data4[6] = p[9], g->Data4[7] = p[10];
+		return 0;
+	}
+
+	return -1;
+}
+
 void print_usage(char **argv)
 {
 	printf("usage: %s efivar_path\n", argv[0]);
@@ -46,20 +66,12 @@ int main(int argc, char **argv)
 	strncpy(tmp, efivar_path, strlen(efivar_path));
 	char *efivar = basename(tmp);
 
-	const char *name = strtok(efivar, "-");
-	struct EFI_GUID VendorGuid = {
-		.Data1 = strtoul(strtok(NULL, "-"), NULL, 0x10),
-		.Data2 = strtoul(strtok(NULL, "-"),  NULL, 0x10),
-		.Data3 = strtoul(strtok(NULL, "-"),  NULL, 0x10),
-	};
-
-	char *rem, octet[2] = {0};
-	uint8_t *d = VendorGuid.Data4;
-	while ((rem = strtok(NULL, "-"))) {
-		for (char *c = rem; *c; c+=2) {
-			strncpy(octet, c, 2);
-			*d++ = strtoul(octet, NULL, 0x10);
-		}
+	const char *name = strtok(efivar, "-"),
+		   *guid_str = name+strlen(name)+1;
+	struct EFI_GUID VendorGuid;
+	if ((parse_guid(&VendorGuid, guid_str) != 0)) {
+		fprintf(stderr, "Invalid or malformed GUID: %s\n", guid_str);
+		return 1;
 	}
 
 	const size_t VarDataBufSize = 0x4000;
