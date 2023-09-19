@@ -50,12 +50,11 @@ int main(int argc, char **argv)
 		.Data1 = strtoul(strtok(NULL, "-"), NULL, 0x10),
 		.Data2 = strtoul(strtok(NULL, "-"),  NULL, 0x10),
 		.Data3 = strtoul(strtok(NULL, "-"),  NULL, 0x10),
-		.Data4 = {},
 	};
 
-	char octet[2] = {};
-	char *rem, *d = VendorGuid.Data4;
-	while (rem = strtok(NULL, "-")) {
+	char *rem, octet[2] = {0};
+	uint8_t *d = VendorGuid.Data4;
+	while ((rem = strtok(NULL, "-"))) {
 		for (char *c = rem; *c; c+=2) {
 			strncpy(octet, c, 2);
 			*d++ = strtoul(octet, NULL, 0x10);
