@@ -1,4 +1,4 @@
-## pcrhash
+## tcgtool
 
 Take a path to an efivar and populate the appropriate variable-sized structure for hashing. Based on edk2's [TpmMeasureAndLogData](https://github.com/tianocore/edk2/blob/29cce3356aec6db878ad318c4abeb63aa9e845aa/SecurityPkg/Library/DxeTpmMeasurementLib/DxeTpmMeasurementLib.c#L222).
 
@@ -7,13 +7,13 @@ This is useful for predicting the next value of a PCR that's calculated at boot 
 ### Building
 
 ```
-make pcrhash
+make
 ```
 
 ### Example
 
 ```
-$ ./pcrhash /sys/firmware/efi/efivars/KEK-8be4df61-93ca-11d2-aa0d-00e098032b8c \
+$ ./tcgtool /sys/firmware/efi/efivars/KEK-8be4df61-93ca-11d2-aa0d-00e098032b8c \
     | sha256sum
 737b882fd7667195c8fbc6d1385106b6c94b73d0f4058650db41c37558e66209  -
 $ tpm2_eventlog /sys/kernel/security/tpm0/binary_bios_measurements 

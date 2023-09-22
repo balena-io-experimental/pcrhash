@@ -1,8 +1,8 @@
 CC ?= gcc-11
 CFLAGS ?= -Wall -pedantic
 
-all: pcrhash
+all: tcgtool
 
 .PHONY: clean
 clean:
-	rm pcrhash
+	rm tcgtool
