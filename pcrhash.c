@@ -67,14 +67,14 @@ int main(int argc, char **argv)
 	assert(strlen(efivar_path) <= tmpsz);
 	strncpy(tmp, efivar_path, strlen(efivar_path));
 	char *efivar = basename(tmp);
-	int errno;
+	int err;
 
 	const char *name = strtok(efivar, "-"),
 		   *guid_str = name+strlen(name)+1;
 	struct EFI_GUID VendorGuid;
-	if (errno = (parse_guid(&VendorGuid, guid_str) != 0)) {
+	if ((err = parse_guid(&VendorGuid, guid_str)) != 0) {
 		fprintf(stderr, "Invalid or malformed GUID: %s\n", guid_str);
-		return errno;
+		return err;
 	}
 
 	// detect when stdin is a pipe so we can read VarData from there
