@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <assert.h>
+#include <sys/stat.h>
 #include <errno.h>
 
 #define MIN(a, b) (a < b) ? a : b
@@ -76,13 +77,28 @@ int main(int argc, char **argv)
 		return errno;
 	}
 
+	// detect when stdin is a pipe so we can read VarData from there
+	struct stat sb;
+	int pipe_input = 0;
+	if (fstat(STDIN_FILENO, &sb) == 0)
+		pipe_input = S_ISFIFO(sb.st_mode);
+
 	const size_t VarDataBufSize = 0x4000;
 	int8_t VarDataBuf[VarDataBufSize];
 
 	FILE *efivar_filp = NULL;
 	size_t VarSize = 0;
-	int8_t *VarData = NULL;
-	if (exists) {
+	int8_t *VarData = VarDataBuf;
+	if (pipe_input) {
+		while (1) {
+			if (VarSize == VarDataBufSize)
+				return -ENOBUFS;
+			size_t bytes = fread(
+				VarDataBuf, 1, VarDataBufSize - VarSize, stdin);
+			if (!bytes) break;
+			VarSize += bytes;
+		}
+	} else if (exists) {
 		efivar_filp = fopen(efivar_path, "rb");
 		// remove first four bytes, which are EFI variable attributes
 		VarSize = fread(VarDataBuf, 1, VarDataBufSize, efivar_filp) - 4;
