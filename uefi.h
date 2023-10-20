@@ -1,5 +1,20 @@
+#ifndef UEFI_H
+#define UEFI_H
+
 #include <stdint.h>
 #include <uchar.h>
+
+#define UINTN unsigned int
+#define UINT8 uint8_t
+#define UINT16 uint16_t
+#define UINT32 uint32_t
+#define UINT64 uint64_t
+#define EFI_STATUS UINTN
+
+#define EFI_SUCCESS 0
+#define EFI_INVALID_PARAMETER 2
+#define EFI_UNSUPPORTED 3
+#define EFI_OUT_OF_RESOURCES 9
 
 struct __attribute__((packed)) EFI_GUID {
 	uint32_t	Data1;
