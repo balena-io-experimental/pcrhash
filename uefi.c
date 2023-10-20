@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,6 +11,8 @@
 #include <unistd.h>
 
 #include "uefi.h"
+#include "pecoff.h"
+#include "sha256.h"
 
 int parse_guid(struct EFI_GUID *g, const char *s)
 {
@@ -112,3 +115,42 @@ int measure_efivar (const char *efivar_path)
 	return 0;
 }
 
+struct EFI_GUID MOK_OWNER = {
+	0x605dab50, 0xe046, 0x4300, {0xab, 0xb6, 0x3d, 0xd8, 0x10, 0xdd, 0x8b, 0x23} };
+
+int hash_efibin(const char *efibin_path)
+{
+	void *efifile;
+	struct stat st;
+	int fdefifile;
+	const size_t sigsz = sizeof(struct EFI_GUID) + SHA256_DIGEST_SIZE;
+	UINT8 sig[sigsz];
+	UINT8 *hash = sig+sizeof(struct EFI_GUID);
+	EFI_STATUS status;
+
+	memset(sig, 0, sigsz);
+	memcpy(sig, &MOK_OWNER, sizeof(struct EFI_GUID));
+
+	if ((fdefifile = open(efibin_path, O_RDONLY)) == -1) {
+		fprintf(stderr, "failed to open file %s\n", efibin_path);
+		exit (1);
+	}
+
+	fstat(fdefifile, &st);
+	efifile = malloc(ALIGN_VALUE(st.st_size, 4096));
+	memset(efifile, 0, ALIGN_VALUE(st.st_size, 4096));
+	read(fdefifile, efifile, st.st_size);
+	close(fdefifile);
+
+	if ((status = sha256_get_pecoff_digest_mem(efifile, st.st_size, hash))
+			!= EFI_SUCCESS) {
+		fprintf(stderr, "failed to get hash of %s: %d\n", efibin_path, status);
+		exit(1);
+	}
+
+	size_t written = write(STDOUT_FILENO, sig, sigsz);
+	if (written != SHA256_DIGEST_SIZE)
+		return 1;
+
+	return 0;
+}

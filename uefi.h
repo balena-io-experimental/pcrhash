@@ -33,5 +33,6 @@ struct __attribute__((packed)) UEFI_VARIABLE_DATA {
 
 int parse_guid(struct EFI_GUID *g, const char *s);
 int measure_efivar(const char *efivar_path);
+int hash_efibin(const char *efibin_path);
 
 #endif

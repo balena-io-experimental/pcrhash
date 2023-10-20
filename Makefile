@@ -3,8 +3,8 @@ CFLAGS ?= -Wall -pedantic
 
 all: tcgtool
 
-tcgtool: uefi.o
+tcgtool: uefi.o sha256.o pecoff.o
 
 .PHONY: clean
 clean:
-	rm tcgtool
+	rm -f tcgtool *.o
