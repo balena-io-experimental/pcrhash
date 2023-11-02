@@ -1,0 +1,184 @@
+- commits:
+    - subject: Add flowzone workflow
+      hash: cec58c3d7d486f3d71aef5a3258c909436a4bdfc
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Alex Gonzalez <alexg@balena.io>
+        signed-off-by: Alex Gonzalez <alexg@balena.io>
+      author: Alex Gonzalez
+    - subject: "README: add example for efibin-hash"
+      hash: f3e5609ca20e54509c52e85cdff37c98554766d3
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: add hash efibin action
+      hash: ddb1725d4da9e45013c5fb5b8931b6c6f9cd667f
+      body: |
+        Add action for creating an SHA256 image digest from PE/COFF images
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: add sha256 implementation from efitools
+      hash: 8bd33faa12531ed57d824065bbb806e23ce25e16
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: refactor uefi functionality
+      hash: 557b67cc4be06c12cbd09d6e1a2018c290c7e431
+      body: |
+        Move uefi specific structures and functions into a separate module.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: use argp for argument parsing
+      hash: 12aba101f3c10ea8f9116de30b60c546a42c1155
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: rename pcrhash -> tcgtool
+      hash: 11ef1e79cf7b3394051efea62e2eb918e72f79af
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: fix naming conflict with existing errno function
+      hash: 7be08a2f37feca932e51ec6f509795632aa2d7c6
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: allow VarData to be piped from stdin
+      hash: 4d8e3faba586f361ce0caf102710330307020fe4
+      body: |
+        Users may wish to hash variable data other than the current state, such
+        as to get the digest of the SecureBoot efivar after entering user mode.
+
+        Allow VarData to be piped from stdin to facilitate this usage.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: return errno on error
+      hash: 694f6989a3b424e57bc88f5769ca55fa96026086
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: make guid parsing more robust
+      hash: ea9a9ec1228b8f357840894eb01d080e14e182e5
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: handle non-existent efivar
+      hash: ff3b8e9a32735cf982c8fc1fa052ee62b2eb8140
+      body: |
+        PCR7 is generated from a combination of the efivars for SecureBoot, PK,
+        KEK, db, and dbx, though not all these variables are required to be set.
+
+        An unset variable still requires a hash of an empty structure with the
+        appropriate vendor GUID and UnicodeName, so handle non-existent
+        variables by creating the structure with an empty VariableData field.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: fix warnings
+      hash: f17b28f6a271e1cb443ca550245f9e86782e94bc
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: "Makefile: default to CC=gcc-11"
+      hash: 38d509209cb6350aaa3847d2b4316f9d4cce3d61
+      body: |
+        Default to the same compiler as we use in Yocto.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: create Makefile
+      hash: 29b861fe4c552646eb152b2f5dc7da48898a5016
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: exit with error on incomplete write
+      hash: 964dcce15a1138c09a17b17efb94ee6acb88b1d9
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: fix compilation error w/ gcc-11
+      hash: 41818b4d14a1b2f6f179649d1c078d0fdd704d3f
+      body: |
+        GCC 11 errors out on attempting to initialize `char tmp` with:
+
+          error: variable-sized object may not be initialized
+
+        Explicitly initialize the array to appease the older compiler
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: Initial commit
+      hash: 4c42a5f8d2bbe07ce411013ca049a198611e0a02
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+  version: 0.1.0
+  title: ""
+  date: 2023-11-02T10:32:45.619Z
