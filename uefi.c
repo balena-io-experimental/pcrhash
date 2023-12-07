@@ -149,7 +149,7 @@ int hash_efibin(const char *efibin_path)
 	}
 
 	size_t written = write(STDOUT_FILENO, sig, sigsz);
-	if (written != SHA256_DIGEST_SIZE)
+	if (written != sigsz)
 		return 1;
 
 	return 0;
