@@ -50,17 +50,18 @@ int main(int argc, char **argv)
 
 	argp_parse(&argp, argc, argv, 0, 0, &args);
 
+	int ret = 1;
 	switch (args.action) {
 		case ACTION_MEASURE_EFIVAR:
-			measure_efivar(args.path);
+			ret = measure_efivar(args.path);
 			break;
 		case ACTION_HASH_EFIBIN:
-			hash_efibin(args.path);
+			ret = hash_efibin(args.path);
 			break;
 		default:
 			printf("No action specified\n");
 			break;
 	}
 
-	return 0;
+	return ret;
 }
