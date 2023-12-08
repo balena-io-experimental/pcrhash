@@ -1,4 +1,30 @@
 - commits:
+    - subject: "main: return result of requested action"
+      hash: 2a3ac0a5060068238ec5887ac5d59f9e464773c3
+      body: |
+        Previously the return value was ignored.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+    - subject: "hash_efibin: fix check of write return"
+      hash: f03dbdf5d40184de29725f2168fd550d727d5a3f
+      body: |
+        The output of write should match the number of bytes we requested to be
+        written, corresponding to the size of the signature, not
+        SHA256_DIGEST_SIZE.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+  version: 0.1.1
+  title: ""
+  date: 2023-12-08T00:12:15.908Z
+- commits:
     - subject: Add flowzone workflow
       hash: cec58c3d7d486f3d71aef5a3258c909436a4bdfc
       body: ""
