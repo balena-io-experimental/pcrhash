@@ -148,6 +148,8 @@ int hash_efibin(const char *efibin_path)
 		exit(1);
 	}
 
+	free(efifile);
+
 	size_t written = write(STDOUT_FILENO, sig, sigsz);
 	if (written != sigsz)
 		return 1;
