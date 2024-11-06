@@ -1,4 +1,17 @@
 - commits:
+    - subject: "hash_efibin: fix leaked buffer for efifile"
+      hash: c88825e34a1531ba66ba6a5613698f778538b42b
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Joseph Kogut <joseph@balena.io>
+        signed-off-by: Joseph Kogut <joseph@balena.io>
+      author: Joseph Kogut
+  version: 0.1.2
+  title: ""
+  date: 2024-11-06T16:35:51.032Z
+- commits:
     - subject: "main: return result of requested action"
       hash: 2a3ac0a5060068238ec5887ac5d59f9e464773c3
       body: |
